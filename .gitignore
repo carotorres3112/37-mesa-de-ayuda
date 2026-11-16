@@ -1,0 +1,46 @@
+# Dependencias
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+!env.example
+*.pem
+*.key
+*firebase-adminsdk*.json
+
+# Pruebas
+coverage/
+playwright-report/
+test-results/
+
+# Vercel
+.vercel/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Cache de TypeScript
+*.tsbuildinfo
+
+# Archivos generados por Next.js
+.next/
+**/.next/

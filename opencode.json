@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "*": "ask",
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.pem": "deny",
+      "*.key": "deny",
+      "*firebase-adminsdk*.json": "deny"
+    },
+    "edit": "deny",
+    "external_directory": "deny",
+    "bash": "deny"
+  }
+}
