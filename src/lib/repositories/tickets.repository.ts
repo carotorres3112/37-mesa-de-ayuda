@@ -2,27 +2,36 @@ import { ticketsEjemplo } from '../data/tickets-ejemplo';
 
 import type { Ticket } from '../../types/ticket';
 
-let tickets: Ticket[] = [...ticketsEjemplo];
+const almacenamiento = globalThis as typeof globalThis & {
+  __mesa37Tickets?: Ticket[];
+};
+
+function obtenerAlmacenamiento(): Ticket[] {
+  almacenamiento.__mesa37Tickets ??= [...ticketsEjemplo];
+  return almacenamiento.__mesa37Tickets;
+}
 
 export function obtenerTodosLosTickets(): Ticket[] {
-  return tickets;
+  return obtenerAlmacenamiento();
 }
 
 export function obtenerTicketPorId(id: string): Ticket | undefined {
-  return tickets.find((ticket) => ticket.id === id);
+  return obtenerAlmacenamiento().find((ticket) => ticket.id === id);
 }
 
 export function agregarTicket(ticket: Ticket): void {
-  tickets = [...tickets, ticket];
+  almacenamiento.__mesa37Tickets = [...obtenerAlmacenamiento(), ticket];
 }
 
 export function reemplazarTicket(actualizado: Ticket): void {
-  tickets = tickets.map((ticket) => (ticket.id === actualizado.id ? actualizado : ticket));
+  almacenamiento.__mesa37Tickets = obtenerAlmacenamiento().map((ticket) =>
+    ticket.id === actualizado.id ? actualizado : ticket,
+  );
 }
 
 /**
- * Restaura los datos de ejemplo. Pensado para pruebas automatizadas.
+ * Restaura los datos de ejemplo para las pruebas automatizadas.
  */
 export function reiniciarTickets(): void {
-  tickets = [...ticketsEjemplo];
+  almacenamiento.__mesa37Tickets = [...ticketsEjemplo];
 }
