@@ -82,3 +82,40 @@ garantizan la ausencia de defectos.
 
 La asistencia de IA propuso los cambios y comandos; la ejecución y
 verificación de resultados se realizaron en el entorno local.
+
+## Avance de los hitos 2 y 3 — 16 de noviembre de 2026
+
+### Herramienta utilizada
+OpenCode con modelo GLM 5.3 Flash Free, ejecutado en entorno aislado con restricciones de seguridad.
+
+### Solicitud realizada
+Analizar el proyecto de mesa de ayuda y desarrollar funcionalidades de creación de tickets, validaciones, componentes reutilizables, seguimiento de estados y pruebas automatizadas.
+
+### Cambios implementados
+- Formulario de creación de tickets.
+- Validaciones de entrada mediante Zod.
+- API REST para crear, consultar y actualizar tickets.
+- Registro de mensajes en la conversación.
+- Reglas provisionales de roles y transiciones de estado.
+- Componentes reutilizables de interfaz.
+- Pruebas unitarias, de integración y de componentes.
+
+### Verificación humana
+Se copiaron los cambios del entorno aislado al repositorio principal.
+Se corrigieron problemas de ESLint y formato.
+Se ejecutaron verificaciones de TypeScript, ESLint, Prettier y Vitest.
+Resultado: 102 pruebas aprobadas y compilación de producción exitosa.
+
+### Limitaciones conocidas
+- La persistencia actual es en memoria; Firestore está pendiente.
+- Firebase Auth y las sesiones seguras están pendientes.
+- Los roles enviados por el cliente no son una autorización segura.
+- Los adjuntos privados de Vercel Blob están pendientes.
+- El despliegue en Vercel está pendiente.
+
+### Evidencias
+- calidad/verificacion-final.txt
+- calidad/compilacion-final.txt
+- openapi.yaml
+- docs/mesa-de-ayuda.postman_collection.json
+- Historial de commits del repositorio.
