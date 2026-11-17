@@ -1,0 +1,11 @@
+Proyecto: 37 - Mesa de ayuda
+Fecha: 2026-11-16 21:26:30 -05
+
+=== GET /api/tickets ===
+HTTP 200
+
+=== GET /api/tickets/TCK-0001 ===
+HTTP 200
+
+=== GET /api/tickets/TCK-9999 ===
+HTTP 404

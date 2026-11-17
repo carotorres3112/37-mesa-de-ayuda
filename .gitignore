@@ -44,3 +44,9 @@ npm-debug.log*
 # Archivos generados por Next.js
 .next/
 **/.next/
+
+# Respaldo temporal de configuración
+package.json.bak
+
+# Archivo generado automáticamente por Next.js
+next-env.d.ts

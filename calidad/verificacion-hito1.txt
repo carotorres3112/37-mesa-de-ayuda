@@ -1,0 +1,55 @@
+=== PROYECTO 37 - EVIDENCIAS DE CALIDAD ===
+Fecha: 2026-11-16 21:25:47 -05
+
+=== VERIFICACIÓN COMPLETA ===
+
+> 37-mesa-de-ayuda@0.1.0 check
+> npm run typecheck && npm run lint && npm run format:check && npm run test && npm run test:components
+
+
+> 37-mesa-de-ayuda@0.1.0 typecheck
+> tsc --noEmit
+
+
+> 37-mesa-de-ayuda@0.1.0 lint
+> eslint . --max-warnings 0
+
+
+> 37-mesa-de-ayuda@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> 37-mesa-de-ayuda@0.1.0 test
+> vitest run
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.1.0 [39m[90m/home/ac_torres12/proyectos/37-mesa-de-ayuda[39m
+
+ [32m✓[39m tests/configuracion.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/tickets-ejemplo.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/modelo-ticket.test.ts [2m([22m[2m31 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m36 passed[39m[22m[90m (36)[39m
+[2m   Start at [22m 21:25:58
+[2m   Duration [22m 462ms[2m (import 74%, transform 12%, tests 8%, worker 5%)[22m
+
+
+> 37-mesa-de-ayuda@0.1.0 test:components
+> vitest run --config vitest.componentes.config.ts
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.1.0 [39m[90m/home/ac_torres12/proyectos/37-mesa-de-ayuda[39m
+
+ [32m✓[39m tests/components/lista-tickets.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 175[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 21:25:59
+[2m   Duration [22m 2.07s[2m (environment 70%, import 19%, tests 9%, transform 2%)[22m
+
+
+=== RESULTADO FINAL ===
+Código de salida: 0

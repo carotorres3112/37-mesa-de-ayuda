@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.contenedor {
+  width: min(100% - 2rem, 1100px);
+  margin: 3rem auto;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+/* Listado de tickets */
+
+section[aria-label='Listado de tickets'] {
+  margin-top: 2rem;
+}
+
+section[aria-label='Listado de tickets'] ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.25rem;
+  padding: 0;
+  margin-top: 1.5rem;
+  list-style: none;
+}
+
+section[aria-label='Listado de tickets'] li {
+  padding: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(15 23 42 / 5%);
+}
+
+section[aria-label='Listado de tickets'] h3 {
+  margin-top: 0;
+  color: #1e40af;
+}
+
+section[aria-label='Listado de tickets'] p {
+  color: #475569;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .contenedor {
+    margin: 1.5rem auto;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Página de detalle del ticket */
+
+section[aria-label='Información del ticket'] {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+section[aria-label='Información del ticket'] p {
+  color: #334155;
+  line-height: 1.6;
+}
+
+section[aria-label='Conversación del ticket'] {
+  margin-top: 2rem;
+}
+
+section[aria-label='Conversación del ticket'] ol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+section[aria-label='Conversación del ticket'] li {
+  width: fit-content;
+  max-width: 85%;
+  padding: 1rem 1.25rem;
+  background: #f1f5f9;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+section[aria-label='Conversación del ticket'] .mensaje-usuario {
+  align-self: flex-start;
+  border: 1px solid #e2e8f0;
+}
+
+section[aria-label='Conversación del ticket'] .mensaje-agente {
+  align-self: flex-end;
+  background: #dbeafe;
+  border: 1px solid #bfdbfe;
+}
+
+section[aria-label='Conversación del ticket'] strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #1e40af;
+}
+
+section[aria-label='Conversación del ticket'] p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  section[aria-label='Información del ticket'] {
+    padding: 1rem;
+  }
+
+  section[aria-label='Conversación del ticket'] li {
+    max-width: 95%;
+  }
+}
