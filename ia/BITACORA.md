@@ -68,3 +68,17 @@ durante el desarrollo y qué verificaciones realizó la persona responsable.
 Las sugerencias de IA requieren revisión humana antes de incorporarse.
 Las pruebas automatizadas no sustituyen la revisión de seguridad ni
 garantizan la ausencia de defectos.
+
+## Mejoras de accesibilidad del Hito 1
+
+- Se revisó la estructura semántica de las páginas.
+- Se añadió una prueba para el estado vacío del listado.
+- Se detectó y corrigió un falso positivo en la prueba inicial.
+- Se agregó `role="status"` al mensaje de lista vacía.
+- Se incorporó un indicador visual para la navegación por teclado.
+- Se verificaron manualmente Tab, Enter y el enlace de regreso.
+- Se ejecutaron 41 pruebas automatizadas satisfactoriamente.
+- Se comprobó la compilación de producción con código de salida 0.
+
+La asistencia de IA propuso los cambios y comandos; la ejecución y
+verificación de resultados se realizaron en el entorno local.

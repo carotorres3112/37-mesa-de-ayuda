@@ -82,3 +82,23 @@ describe('ListaTickets - estados especiales', () => {
     expect(screen.queryByRole('status')).toBeNull();
   });
 });
+
+describe('ListaTickets - accesibilidad', () => {
+  it('anuncia mediante role status cuando no existen tickets', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ tickets: [] }),
+      }),
+    );
+
+    render(<ListaTickets />);
+
+    await screen.findByText('No hay tickets disponibles.');
+
+    const mensaje = screen.getByRole('status');
+
+    expect(mensaje.textContent).toBe('No hay tickets disponibles.');
+  });
+});

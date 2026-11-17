@@ -45,7 +45,7 @@ export default function ListaTickets() {
   }
 
   if (tickets.length === 0) {
-    return <p>No hay tickets disponibles.</p>;
+    return <p role="status">No hay tickets disponibles.</p>;
   }
 
   return (

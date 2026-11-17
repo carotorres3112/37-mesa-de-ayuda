@@ -128,3 +128,11 @@ section[aria-label='Conversación del ticket'] p {
     max-width: 95%;
   }
 }
+
+/* Accesibilidad: navegación con teclado */
+
+a:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
