@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "Mesa de Ayuda - API",
+    "_postman_id": "37-mesa-de-ayuda-academico",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar tickets",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tickets"
+      }
+    },
+    {
+      "name": "Consultar ticket",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tickets/TCK-0001"
+      }
+    },
+    {
+      "name": "Ticket inexistente",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tickets/TCK-9999"
+      }
+    },
+    {
+      "name": "Crear ticket",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tickets",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"asunto\": \"Problema con el computador\",\n  \"descripcion\": \"El computador no inicia correctamente desde esta mañana.\",\n  \"prioridad\": \"Alta\",\n  \"solicitanteNombre\": \"Usuario de prueba\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Cambiar estado",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tickets/TCK-0001",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estado\": \"En curso\",\n  \"rol\": \"agente\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Agregar mensaje",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tickets/TCK-0001/mensajes",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Estamos revisando tu solicitud.\",\n  \"autorRol\": \"agente\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
