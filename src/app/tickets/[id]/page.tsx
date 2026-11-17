@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import ConversacionTicket from '../../../components/conversacion-ticket';
+import FormularioEstado from '../../../components/formulario-estado';
+import FormularioMensaje from '../../../components/formulario-mensaje';
+import ResumenTicket from '../../../components/resumen-ticket';
 import { buscarTicketPorId } from '../../../lib/services/tickets.service';
 
 type Propiedades = {
@@ -21,33 +25,13 @@ export default async function DetalleTicket({ params }: Propiedades) {
 
       <h1>{ticket.asunto}</h1>
 
-      <section aria-label="Información del ticket">
-        <p>Identificador: {ticket.id}</p>
-        <p>Descripción: {ticket.descripcion}</p>
-        <p>Prioridad: {ticket.prioridad}</p>
-        <p>Estado: {ticket.estado}</p>
-        <p>Solicitante: {ticket.solicitante.nombre}</p>
-      </section>
+      <ResumenTicket ticket={ticket} />
 
-      <section aria-label="Conversación del ticket">
-        <h2>Conversación</h2>
+      <ConversacionTicket mensajes={ticket.mensajes} />
 
-        {ticket.mensajes.length === 0 ? (
-          <p>Este ticket todavía no tiene mensajes.</p>
-        ) : (
-          <ol>
-            {ticket.mensajes.map((mensaje, indice) => (
-              <li
-                key={indice}
-                className={mensaje.autorRol === 'agente' ? 'mensaje-agente' : 'mensaje-usuario'}
-              >
-                <strong>{mensaje.autorRol === 'agente' ? 'Agente' : 'Usuario'}</strong>
-                <p>{mensaje.texto}</p>
-              </li>
-            ))}
-          </ol>
-        )}
-      </section>
+      <FormularioEstado key={ticket.estado} ticketId={ticket.id} estadoActual={ticket.estado} />
+
+      <FormularioMensaje ticketId={ticket.id} />
     </main>
   );
 }

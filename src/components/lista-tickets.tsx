@@ -3,11 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import type { z } from 'zod';
-
-import type { ticketSchema } from '../lib/schemas/ticket';
-
-type Ticket = z.infer<typeof ticketSchema>;
+import type { Ticket } from '../types/ticket';
 
 export default function ListaTickets() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -45,7 +41,7 @@ export default function ListaTickets() {
   }
 
   if (tickets.length === 0) {
-    return <p role="status">No hay tickets disponibles.</p>;
+    return <p>No hay tickets disponibles.</p>;
   }
 
   return (
