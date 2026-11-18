@@ -589,3 +589,83 @@ form button[type='submit']:not(:disabled):hover {
   color: #64748b;
   margin-bottom: 25px;
 }
+
+/* Barra de usuario autenticado */
+
+.usuario-sesion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.usuario-sesion span {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+  max-width: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.usuario-sesion button {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.usuario-sesion button:hover:not(:disabled) {
+  background: #dbeafe;
+}
+
+.usuario-sesion button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.usuario-sesion button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+/* Adaptación de la navegación */
+
+.barra-superior nav {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+@media (max-width: 850px) {
+  .barra-contenido {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .barra-superior nav {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .usuario-sesion {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .usuario-sesion span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    text-align: center;
+  }
+}

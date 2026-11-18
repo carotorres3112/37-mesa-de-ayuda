@@ -1,3 +1,4 @@
+import UsuarioSesion from '../components/usuario-sesion';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -29,6 +30,7 @@ export default function RootLayout({
               <Link href="/tickets/nuevo" className="nav-nuevo">
                 + Nuevo ticket
               </Link>
+              <UsuarioSesion />
             </nav>
           </div>
         </header>
