@@ -16,7 +16,9 @@
     "test:components": "vitest run --config vitest.componentes.config.ts"
   },
   "dependencies": {
-    "firebase": "^13.3.0",
+    "@vercel/blob": "^2.9.0",
+    "firebase": "^13.4.0",
+    "firebase-admin": "^14.5.1",
     "next": "^16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

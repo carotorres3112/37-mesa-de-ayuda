@@ -5,7 +5,7 @@ import { crearTicket, listarTickets } from '../../../lib/services/tickets.servic
 
 export async function GET() {
   try {
-    const tickets = listarTickets();
+    const tickets = await listarTickets();
 
     return NextResponse.json({ tickets });
   } catch {
@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(solicitud: Request) {
   try {
     const cuerpo = await solicitud.json();
-    const ticket = crearTicket(cuerpo);
+    const ticket = await crearTicket(cuerpo);
 
     return NextResponse.json({ ticket }, { status: 201 });
   } catch (error) {

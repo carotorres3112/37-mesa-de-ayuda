@@ -2,97 +2,53 @@ import {
   agregarTicket,
   obtenerTicketPorId,
   obtenerTodosLosTickets,
-  reemplazarTicket,
 } from '../repositories/tickets.repository';
-import {
-  cambioEstadoSchema,
-  crearTicketSchema,
-  mensajeEntradaSchema,
-  ticketSchema,
-} from '../schemas/ticket';
+import { cambioEstadoSchema, crearTicketSchema, mensajeEntradaSchema } from '../schemas/ticket';
 import { ErrorPermisoDenegado, ErrorTicketInexistente, ErrorTransicionInvalida } from './errores';
 import { esTransicionValida, puedeCambiarEstado } from './roles.service';
-
+import { obtenerFirestore } from '../firebase/admin';
+import { ticketSchema } from '../schemas/ticket';
 import type { Ticket } from '../../types/ticket';
 
-export function listarTickets(): Ticket[] {
+export async function listarTickets(): Promise<Ticket[]> {
   return obtenerTodosLosTickets();
 }
-
-export function buscarTicketPorId(id: string): Ticket | undefined {
+export async function buscarTicketPorId(id: string): Promise<Ticket | undefined> {
   return obtenerTicketPorId(id);
 }
-
-function generarIdentificador(secuencia: number): string {
-  return `TCK-${String(secuencia).padStart(4, '0')}`;
+export async function crearTicket(entrada: unknown): Promise<Ticket> {
+  return agregarTicket(crearTicketSchema.parse(entrada));
 }
 
-/**
- * Crea un ticket a partir de datos validados con Zod.
- *
- * La identidad del solicitante es temporal (nombre del formulario): cuando se
- * integre Firebase Authentication se tomará del usuario autenticado.
- */
-export function crearTicket(entrada: unknown): Ticket {
-  const datos = crearTicketSchema.parse(entrada);
-  const secuencia = obtenerTodosLosTickets().length + 1;
-  const ticket: Ticket = {
-    id: generarIdentificador(secuencia),
-    asunto: datos.asunto,
-    descripcion: datos.descripcion,
-    prioridad: datos.prioridad,
-    estado: 'Abierto',
-    solicitante: {
-      id: `USR-TEMP-${String(secuencia).padStart(3, '0')}`,
-      nombre: datos.solicitanteNombre,
-      rol: 'usuario',
-    },
-    mensajes: [],
-  };
-
-  agregarTicket(ticketSchema.parse(ticket));
-
-  return ticket;
-}
-
-export function agregarMensajeATicket(id: string, entrada: unknown): Ticket {
+export async function agregarMensajeATicket(id: string, entrada: unknown): Promise<Ticket> {
   const datos = mensajeEntradaSchema.parse(entrada);
-  const ticket = obtenerTicketPorId(id);
-
-  if (!ticket) {
-    throw new ErrorTicketInexistente();
-  }
-
-  const actualizado: Ticket = {
-    ...ticket,
-    mensajes: [...ticket.mensajes, { autorRol: datos.autorRol, texto: datos.texto }],
-  };
-
-  reemplazarTicket(actualizado);
-
-  return actualizado;
+  const db = obtenerFirestore();
+  return db.runTransaction(async (tx) => {
+    const ref = db.collection('tickets').doc(id);
+    const doc = await tx.get(ref);
+    if (!doc.exists) throw new ErrorTicketInexistente();
+    const ticket = ticketSchema.parse({ ...doc.data(), id: doc.id });
+    const actualizado = ticketSchema.parse({
+      ...ticket,
+      mensajes: [...ticket.mensajes, { autorRol: datos.autorRol, texto: datos.texto }],
+    });
+    tx.set(ref, actualizado);
+    return actualizado;
+  });
 }
 
-export function cambiarEstadoTicket(id: string, entrada: unknown): Ticket {
+export async function cambiarEstadoTicket(id: string, entrada: unknown): Promise<Ticket> {
   const datos = cambioEstadoSchema.parse(entrada);
-
-  if (!puedeCambiarEstado(datos.rol)) {
-    throw new ErrorPermisoDenegado();
-  }
-
-  const ticket = obtenerTicketPorId(id);
-
-  if (!ticket) {
-    throw new ErrorTicketInexistente();
-  }
-
-  if (!esTransicionValida(ticket.estado, datos.estado)) {
-    throw new ErrorTransicionInvalida();
-  }
-
-  const actualizado: Ticket = { ...ticket, estado: datos.estado };
-
-  reemplazarTicket(actualizado);
-
-  return actualizado;
+  if (!puedeCambiarEstado(datos.rol)) throw new ErrorPermisoDenegado();
+  const db = obtenerFirestore();
+  return db.runTransaction(async (tx) => {
+    const ref = db.collection('tickets').doc(id);
+    const doc = await tx.get(ref);
+    if (!doc.exists) throw new ErrorTicketInexistente();
+    const ticket = ticketSchema.parse({ ...doc.data(), id: doc.id });
+    if (!esTransicionValida(ticket.estado, datos.estado)) throw new ErrorTransicionInvalida();
+    const actualizado = ticketSchema.parse({ ...ticket, estado: datos.estado });
+    tx.set(ref, actualizado);
+    return actualizado;
+  });
 }

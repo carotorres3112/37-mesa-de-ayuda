@@ -11,7 +11,7 @@ export async function POST(solicitud: Request, contexto: ContextoRuta) {
   try {
     const { id } = await contexto.params;
     const cuerpo = await solicitud.json();
-    const ticket = agregarMensajeATicket(id, cuerpo);
+    const ticket = await agregarMensajeATicket(id, cuerpo);
 
     return NextResponse.json({ ticket });
   } catch (error) {

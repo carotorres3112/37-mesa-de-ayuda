@@ -11,7 +11,7 @@
  */
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { reiniciarTickets } from '../../src/lib/repositories/tickets.repository';
+import { reiniciarFirestoreSimulado } from '../helpers/firestore-simulado';
 import { POST as crearTicketApi } from '../../src/app/api/tickets/route';
 import { PATCH as cambiarEstadoApi } from '../../src/app/api/tickets/[id]/route';
 import { POST as agregarMensajeApi } from '../../src/app/api/tickets/[id]/mensajes/route';
@@ -38,7 +38,7 @@ function contexto(id: string) {
 }
 
 beforeEach(() => {
-  reiniciarTickets();
+  reiniciarFirestoreSimulado();
 });
 
 describe('POST /api/tickets', () => {

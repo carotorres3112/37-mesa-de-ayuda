@@ -13,7 +13,7 @@ type Propiedades = {
 
 export default async function DetalleTicket({ params }: Propiedades) {
   const { id } = await params;
-  const ticket = buscarTicketPorId(id);
+  const ticket = await buscarTicketPorId(id);
 
   if (!ticket) {
     notFound();
