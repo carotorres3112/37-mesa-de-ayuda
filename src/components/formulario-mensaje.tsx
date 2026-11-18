@@ -2,24 +2,19 @@
 
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
 
 import { agregarMensajeRemoto } from '../lib/api/cliente-tickets';
-import { mensajeEntradaSchema, rolSchema } from '../lib/schemas/ticket';
+import { mensajeEntradaSchema } from '../lib/schemas/ticket';
 import { resumirErrores } from '../lib/validaciones/errores-formulario';
 
 import CampoTexto from './campo-texto';
-import SeleccionCampo from './seleccion-campo';
 
 type Propiedades = {
   ticketId: string;
 };
 
-// eslint-disable-next-line max-lines-per-function
 export default function FormularioMensaje({ ticketId }: Propiedades) {
-  const router = useRouter();
   const [texto, setTexto] = useState('');
-  const [autorRol, setAutorRol] = useState('usuario');
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [errorServidor, setErrorServidor] = useState('');
   const [enviando, setEnviando] = useState(false);
@@ -27,7 +22,7 @@ export default function FormularioMensaje({ ticketId }: Propiedades) {
   async function enviar(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
-    const validacion = mensajeEntradaSchema.safeParse({ texto, autorRol });
+    const validacion = mensajeEntradaSchema.safeParse({ texto, autorRol: 'usuario' });
 
     if (!validacion.success) {
       setErrores(resumirErrores(validacion.error));
@@ -48,7 +43,7 @@ export default function FormularioMensaje({ ticketId }: Propiedades) {
 
     setTexto('');
     setErrorServidor('');
-    router.refresh();
+    window.dispatchEvent(new Event('ticket-actualizado'));
   }
 
   return (
@@ -64,13 +59,6 @@ export default function FormularioMensaje({ ticketId }: Propiedades) {
         valor={texto}
         error={errores.texto}
         onCambio={setTexto}
-      />
-      <SeleccionCampo
-        nombre="autorRol"
-        etiqueta="Actúas como"
-        opciones={rolSchema.options}
-        valor={autorRol}
-        onCambio={setAutorRol}
       />
 
       <button type="submit" disabled={enviando}>

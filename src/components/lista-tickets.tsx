@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import type { Ticket } from '../types/ticket';
+import { fetchAutenticado } from '../lib/firebase/api-autenticada';
 
 export default function ListaTickets() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -13,7 +14,7 @@ export default function ListaTickets() {
   useEffect(() => {
     async function cargarTickets() {
       try {
-        const respuesta = await fetch('/api/tickets');
+        const respuesta = await fetchAutenticado('/api/tickets');
 
         if (!respuesta.ok) {
           throw new Error('Error al consultar los tickets');
@@ -37,7 +38,7 @@ export default function ListaTickets() {
   }
 
   if (error) {
-    return <p role="alert">{error}</p>;
+    return <AvisoSesion />;
   }
 
   if (tickets.length === 0) {
@@ -61,5 +62,17 @@ export default function ListaTickets() {
         ))}
       </ul>
     </section>
+  );
+}
+
+function AvisoSesion() {
+  return (
+    <div className="aviso-sesion">
+      <h2>Accede a tus solicitudes</h2>
+      <p>Inicia sesión para consultar y gestionar tus tickets.</p>
+      <Link href="/login" className="boton">
+        Iniciar sesión
+      </Link>
+    </div>
   );
 }

@@ -505,3 +505,87 @@ form button[type='submit']:not(:disabled):hover {
     flex-direction: column;
   }
 }
+
+/* Inicio de sesión */
+
+.login-contenedor {
+  max-width: 440px;
+  margin: 55px auto;
+}
+
+.login-encabezado {
+  text-align: center;
+}
+
+.login-icono {
+  display: block;
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.login-encabezado h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.login-encabezado p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.login-contenedor form {
+  margin-top: 28px;
+  padding: 30px;
+  box-shadow: 0 12px 35px rgb(15 23 42 / 7%);
+}
+
+.login-contenedor form button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+}
+
+.login-volver {
+  text-align: center;
+}
+
+.login-volver a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.aviso-sesion {
+  margin: 25px 0;
+  padding: 35px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+}
+
+.aviso-sesion h2 {
+  color: #1e40af;
+}
+
+.aviso-sesion p {
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+.aviso-sesion {
+  margin: 25px 0;
+  padding: 35px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+}
+
+.aviso-sesion h2 {
+  color: #1e40af;
+}
+
+.aviso-sesion p {
+  color: #64748b;
+  margin-bottom: 25px;
+}

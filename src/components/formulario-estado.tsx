@@ -2,15 +2,13 @@
 
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
 
 import { cambiarEstadoRemoto } from '../lib/api/cliente-tickets';
-import { rolSchema } from '../lib/schemas/ticket';
 import { transicionesPermitidas } from '../lib/services/roles.service';
 
 import SeleccionCampo from './seleccion-campo';
 
-import type { EstadoTicket, Rol } from '../types/ticket';
+import type { EstadoTicket } from '../types/ticket';
 
 type Propiedades = {
   ticketId: string;
@@ -18,10 +16,8 @@ type Propiedades = {
 };
 
 export default function FormularioEstado({ ticketId, estadoActual }: Propiedades) {
-  const router = useRouter();
   const opciones = transicionesPermitidas(estadoActual);
   const [estado, setEstado] = useState<EstadoTicket>(opciones[0] ?? estadoActual);
-  const [rol, setRol] = useState<Rol>('agente');
   const [error, setError] = useState('');
   const [enviando, setEnviando] = useState(false);
 
@@ -29,7 +25,7 @@ export default function FormularioEstado({ ticketId, estadoActual }: Propiedades
     evento.preventDefault();
     setEnviando(true);
 
-    const resultado = await cambiarEstadoRemoto(ticketId, { estado, rol });
+    const resultado = await cambiarEstadoRemoto(ticketId, { estado, rol: 'usuario' });
 
     setEnviando(false);
 
@@ -39,7 +35,7 @@ export default function FormularioEstado({ ticketId, estadoActual }: Propiedades
     }
 
     setError('');
-    router.refresh();
+    window.dispatchEvent(new Event('ticket-actualizado'));
   }
 
   if (opciones.length === 0) {
@@ -58,13 +54,6 @@ export default function FormularioEstado({ ticketId, estadoActual }: Propiedades
         opciones={opciones}
         valor={estado}
         onCambio={(valor) => setEstado(valor as EstadoTicket)}
-      />
-      <SeleccionCampo
-        nombre="rol"
-        etiqueta="Actúas como"
-        opciones={rolSchema.options}
-        valor={rol}
-        onCambio={(valor) => setRol(valor as Rol)}
       />
 
       <button type="submit" disabled={enviando}>
