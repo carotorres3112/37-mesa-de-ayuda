@@ -240,3 +240,268 @@ form button[type='submit']:disabled {
 .etiqueta-urgente {
   background: #b91c1c;
 }
+
+/* Diseño visual del panel de soporte */
+
+body {
+  background: #f4f7fc;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+.barra-superior {
+  background: #ffffff;
+  border-bottom: 1px solid #e5eaf2;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.barra-contenido {
+  max-width: 1100px;
+  margin: auto;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 23px;
+  font-weight: 800;
+  color: #15213b;
+  text-decoration: none;
+  letter-spacing: -1px;
+}
+
+.marca-icono {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 11px;
+  font-size: 22px;
+}
+
+.marca-punto {
+  color: #2563eb;
+}
+
+.barra-superior nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.barra-superior nav a {
+  text-decoration: none;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.barra-superior nav .nav-nuevo {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 11px 15px;
+  border-radius: 9px;
+}
+
+.contenedor {
+  margin: 35px auto 70px;
+}
+
+.hero {
+  background: linear-gradient(120deg, #172b59, #1d4ed8);
+  color: white;
+  border-radius: 22px;
+  padding: 46px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 16px 35px rgb(29 78 216 / 12%);
+}
+
+.hero-etiqueta,
+.subtitulo {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.hero-etiqueta {
+  color: #bfdbfe;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 4vw, 43px);
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+  margin: 17px 0;
+  max-width: 600px;
+}
+
+.hero p {
+  color: #dbeafe;
+  line-height: 1.8;
+  max-width: 550px;
+  margin-bottom: 27px;
+}
+
+.boton-hero {
+  background: #ffffff;
+  color: #1d4ed8;
+  font-weight: 700;
+  padding: 13px 19px;
+}
+
+.hero-ilustracion {
+  min-height: 200px;
+  border: 1px solid rgb(255 255 255 / 20%);
+  background: rgb(255 255 255 / 9%);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.hero-ilustracion span {
+  font-size: 65px;
+}
+
+.hero-ilustracion strong {
+  font-size: 20px;
+}
+
+.hero-ilustracion small {
+  color: #bfdbfe;
+}
+
+.seccion-encabezado {
+  margin-top: 45px;
+}
+
+.seccion-encabezado h2 {
+  font-size: 27px;
+  margin: 9px 0;
+  letter-spacing: -0.7px;
+}
+
+.seccion-encabezado p {
+  color: #64748b;
+}
+
+.subtitulo {
+  color: #2563eb;
+}
+
+section[aria-label='Listado de tickets'] {
+  margin-top: 20px;
+}
+
+section[aria-label='Listado de tickets'] > h2 {
+  font-size: 18px;
+  color: #334155;
+}
+
+section[aria-label='Listado de tickets'] li {
+  border-radius: 16px;
+  border: 1px solid #e4eaf3;
+  box-shadow: 0 6px 20px rgb(15 23 42 / 4%);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+section[aria-label='Listado de tickets'] li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgb(15 23 42 / 10%);
+}
+
+section[aria-label='Listado de tickets'] h3 a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+section[aria-label='Listado de tickets'] h3 a:hover {
+  text-decoration: underline;
+}
+
+form[aria-label],
+section[aria-label='Información del ticket'] {
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgb(15 23 42 / 4%);
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  padding: 12px;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+.boton,
+form button[type='submit'] {
+  transition: background 0.2s;
+}
+
+.boton:hover,
+form button[type='submit']:not(:disabled):hover {
+  background: #1d4ed8;
+}
+
+.boton-hero:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.pie-pagina {
+  max-width: 1100px;
+  margin: 40px auto 20px;
+  padding: 22px 20px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 28px 22px;
+  }
+
+  .hero-ilustracion {
+    min-height: 130px;
+  }
+
+  .hero-ilustracion span {
+    font-size: 40px;
+  }
+
+  .barra-superior nav {
+    gap: 12px;
+  }
+
+  .pie-pagina {
+    flex-direction: column;
+  }
+}
