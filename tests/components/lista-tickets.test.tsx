@@ -2,18 +2,23 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import ListaTickets from '../../src/components/lista-tickets';
+import { fetchAutenticado } from '../../src/lib/firebase/api-autenticada';
+
+vi.mock('../../src/lib/firebase/api-autenticada', () => ({
+  fetchAutenticado: vi.fn(),
+}));
+
+const fetchSimulado = vi.mocked(fetchAutenticado);
 
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.clearAllMocks();
 });
 
 describe('ListaTickets - carga y resultados', () => {
   it('muestra un mensaje mientras carga los tickets', () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(() => new Promise(() => {})),
-    );
+    fetchSimulado.mockImplementation(vi.fn(() => new Promise<Response>(() => {})));
 
     render(<ListaTickets />);
 
@@ -21,8 +26,7 @@ describe('ListaTickets - carga y resultados', () => {
   });
 
   it('muestra los tickets recibidos desde la API', async () => {
-    vi.stubGlobal(
-      'fetch',
+    fetchSimulado.mockImplementation(
       vi.fn().mockResolvedValue({
         ok: true,
         json: async () => ({
@@ -52,8 +56,7 @@ describe('ListaTickets - carga y resultados', () => {
 
 describe('ListaTickets - estados especiales', () => {
   it('muestra un mensaje cuando no existen tickets', async () => {
-    vi.stubGlobal(
-      'fetch',
+    fetchSimulado.mockImplementation(
       vi.fn().mockResolvedValue({
         ok: true,
         json: async () => ({
@@ -71,14 +74,21 @@ describe('ListaTickets - estados especiales', () => {
   });
 
   it('muestra un mensaje cuando falla la API', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Error de conexión')));
+    fetchSimulado.mockImplementation(vi.fn().mockRejectedValue(new Error('Error de conexión')));
 
     render(<ListaTickets />);
 
-    const mensaje = await screen.findByRole('alert');
+    const titulo = await screen.findByRole('heading', {
+      name: 'Accede a tus solicitudes',
+    });
 
-    expect(mensaje.textContent).toBe('No fue posible cargar los tickets.');
+    expect(titulo).toBeTruthy();
 
+    const enlace = screen.getByRole('link', {
+      name: 'Iniciar sesión',
+    });
+
+    expect(enlace.getAttribute('href')).toBe('/login');
     expect(screen.queryByRole('status')).toBeNull();
   });
 });

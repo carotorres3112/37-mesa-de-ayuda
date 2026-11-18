@@ -1,3 +1,5 @@
+import { fetchAutenticado } from '../firebase/api-autenticada';
+
 /**
  * Clientes HTTP de las rutas API de tickets.
  *
@@ -22,7 +24,7 @@ async function solicitar(
   cuerpo: unknown,
 ): Promise<{ ok: boolean; datos: DatosRespuesta }> {
   try {
-    const respuesta = await fetch(url, {
+    const respuesta = await fetchAutenticado(url, {
       method: metodo,
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(cuerpo),

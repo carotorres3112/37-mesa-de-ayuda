@@ -5,14 +5,32 @@ import ListaTickets from '../components/lista-tickets';
 export default function HomePage() {
   return (
     <main className="contenedor">
-      <h1>Mesa de Ayuda</h1>
-      <p>Consulta y seguimiento de solicitudes de soporte.</p>
+      <section className="hero">
+        <div>
+          <span className="hero-etiqueta">CENTRO DE SOPORTE</span>
+          <h1>Gestiona tus solicitudes en un solo lugar.</h1>
+          <p>
+            Registra incidencias, consulta su prioridad y realiza seguimiento al estado de cada
+            solicitud de soporte.
+          </p>
+          <Link href="/tickets/nuevo" className="boton boton-hero">
+            + Crear nuevo ticket
+          </Link>
+        </div>
+        <div className="hero-ilustracion" aria-hidden="true">
+          <span>🎫</span>
+          <strong>Soporte organizado</strong>
+          <small>Seguimiento de solicitudes</small>
+        </div>
+      </section>
 
-      <p>
-        <Link href="/tickets/nuevo" className="boton">
-          Crear nuevo ticket
-        </Link>
-      </p>
+      <div className="seccion-encabezado">
+        <div>
+          <span className="subtitulo">GESTIÓN DE SOLICITUDES</span>
+          <h2>Panel de tickets</h2>
+          <p>Consulta los casos registrados y accede a sus detalles.</p>
+        </div>
+      </div>
 
       <ListaTickets />
     </main>

@@ -9,6 +9,7 @@ export type DatosTicket = {
   descripcion: string;
   prioridad: z.infer<typeof prioridadTicketSchema>;
   solicitanteNombre: string;
+  solicitanteId?: string;
 };
 
 export async function obtenerTodosLosTickets(): Promise<Ticket[]> {
@@ -38,7 +39,7 @@ export async function agregarTicket(datos: DatosTicket): Promise<Ticket> {
       prioridad: datos.prioridad,
       estado: 'Abierto',
       solicitante: {
-        id: `USR-TEMP-${String(siguiente).padStart(3, '0')}`,
+        id: datos.solicitanteId ?? `USR-TEMP-${String(siguiente).padStart(3, '0')}`,
         nombre: datos.solicitanteNombre,
         rol: 'usuario',
       },

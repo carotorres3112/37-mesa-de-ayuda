@@ -16,8 +16,9 @@ export async function listarTickets(): Promise<Ticket[]> {
 export async function buscarTicketPorId(id: string): Promise<Ticket | undefined> {
   return obtenerTicketPorId(id);
 }
-export async function crearTicket(entrada: unknown): Promise<Ticket> {
-  return agregarTicket(crearTicketSchema.parse(entrada));
+export async function crearTicket(entrada: unknown, solicitanteId?: string): Promise<Ticket> {
+  const datos = crearTicketSchema.parse(entrada);
+  return agregarTicket({ ...datos, solicitanteId });
 }
 
 export async function agregarMensajeATicket(id: string, entrada: unknown): Promise<Ticket> {

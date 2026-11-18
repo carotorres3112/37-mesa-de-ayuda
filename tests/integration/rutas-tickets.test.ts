@@ -9,12 +9,34 @@
  *                                      permisos, 409 transición inválida, 404 inexistente.
  * - POST /api/tickets/[id]/mensajes -> 200 con el ticket actualizado, 404 inexistente.
  */
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { reiniciarFirestoreSimulado } from '../helpers/firestore-simulado';
 import { POST as crearTicketApi } from '../../src/app/api/tickets/route';
 import { PATCH as cambiarEstadoApi } from '../../src/app/api/tickets/[id]/route';
 import { POST as agregarMensajeApi } from '../../src/app/api/tickets/[id]/mensajes/route';
+
+vi.mock('../../src/lib/firebase/verificar-usuario', () => ({
+  verificarUsuario: vi.fn(async (solicitud: Request) => {
+    const autorizacion = solicitud.headers.get('authorization');
+
+    if (!autorizacion?.startsWith('Bearer prueba-')) {
+      return null;
+    }
+
+    const rol = autorizacion.slice('Bearer prueba-'.length);
+
+    if (rol !== 'usuario' && rol !== 'agente' && rol !== 'admin') {
+      return null;
+    }
+
+    return {
+      uid: 'usuario-pruebas',
+      email: 'pruebas@ejemplo.com',
+      rol,
+    };
+  }),
+}));
 
 const BASE = 'http://localhost/api/tickets';
 
@@ -28,7 +50,10 @@ const SOLICITUD_VALIDA = {
 function peticion(metodo: 'POST' | 'PATCH', cuerpo: unknown, ruta = '') {
   return new Request(`${BASE}/${ruta}`, {
     method: metodo,
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      authorization: 'Bearer prueba-agente',
+    },
     body: JSON.stringify(cuerpo),
   });
 }
@@ -68,7 +93,10 @@ describe('POST /api/tickets', () => {
   it('rechaza un cuerpo con JSON malformado con 400', async () => {
     const solicitud = new Request(BASE, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        authorization: 'Bearer prueba-agente',
+      },
       body: '{asunto:',
     });
 
@@ -94,9 +122,16 @@ describe('PATCH /api/tickets/[id]', () => {
   });
 
   it('rechaza a un usuario sin permisos con 403', async () => {
-    const cuerpo = { estado: 'En curso', rol: 'usuario' };
+    const cuerpo = { estado: 'En curso', rol: 'agente' };
     const respuesta = await cambiarEstadoApi(
-      peticion('PATCH', cuerpo, 'TCK-0001'),
+      new Request(`${BASE}/TCK-0001`, {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+          authorization: 'Bearer prueba-usuario',
+        },
+        body: JSON.stringify(cuerpo),
+      }),
       contexto('TCK-0001'),
     );
 
